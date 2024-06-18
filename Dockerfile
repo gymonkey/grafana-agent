@@ -19,7 +19,7 @@ WORKDIR /src/agent
 # Build the UI before building the agent, which will then bake the final UI
 # into the binary.
 #   make generate-ui
-
+RUN go mod download
 RUN GOOS=$TARGETOS GOARCH=$TARGETARCH GOARM=${TARGETVARIANT#v} \
     RELEASE_BUILD=${RELEASE_BUILD} VERSION=${VERSION} \
     GO_TAGS="netgo builtinassets promtail_journal_enabled" \
