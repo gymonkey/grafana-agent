@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/go-kit/log/level"
@@ -25,6 +26,7 @@ import (
 	// Embed a set of fallback X.509 trusted roots
 	// Allows the app to work correctly even when the OS does not provide a verifier or systems roots pool
 	_ "golang.org/x/crypto/x509roots/fallback"
+	_ "net/http/pprof"
 )
 
 func init() {
@@ -32,6 +34,7 @@ func init() {
 }
 
 func main() {
+	go http.ListenAndServe(":9394", nil)
 	// If Windows is trying to run as a service, go through that
 	// path instead.
 	if IsWindowsService() {
